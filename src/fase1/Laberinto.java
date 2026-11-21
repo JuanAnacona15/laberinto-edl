@@ -86,6 +86,34 @@ public class Laberinto {
         return camino;
     }
 
+    public ListaEnlazada resolverDFS() {
+        boolean[][] visitado = new boolean[filas][columnas];
+        fase2.Pila pila = new fase2.Pila();
+        Celda celdaInicio = new Celda(inicio[0], inicio[1], 'S');
+        pila.push(celdaInicio);
+        visitado[inicio[0]][inicio[1]] = true;
+
+        int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+
+        while (!pila.estaVacia()) {
+            Celda actual = pila.pop();
+            if (actual.fila == salida[0] && actual.columna == salida[1]) {
+                return reconstruirCamino(actual);
+            }
+            for (int[] d : dirs) {
+                int nf = actual.fila + d[0], nc = actual.columna + d[1];
+                if (nf >= 0 && nf < filas && nc >= 0 && nc < columnas
+                        && !visitado[nf][nc] && matriz[nf][nc] != 'W') {
+                    visitado[nf][nc] = true;
+                    Celda vecino = new Celda(nf, nc, matriz[nf][nc]);
+                    vecino.anterior = actual;
+                    pila.push(vecino);
+                }
+            }
+        }
+        return null; // no hay camino
+    }
+
     public char[][] getMatriz() { return matriz; }
     public int[] getInicio() { return inicio; }
     public int[] getSalida() { return salida; }

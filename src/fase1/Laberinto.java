@@ -3,9 +3,9 @@ package fase1;
 import java.util.Random;
 
 public class Laberinto {
-    private char[][] matriz;
-    private int filas, columnas;
-    private int[] inicio, salida;
+    protected char[][] matriz;
+    protected int filas, columnas;
+    protected int[] inicio, salida;
 
     public Laberinto(int filas, int columnas, long semilla) {
         this.filas = filas;
@@ -112,6 +112,14 @@ public class Laberinto {
             }
         }
         return null; // no hay camino
+    }
+
+        protected void setMatriz(char[][] m, int f, int c) {
+        this.matriz = m;
+        this.filas = f;
+        this.columnas = c;
+        this.inicio = new int[]{1, 1};
+        this.salida = new int[]{f - 2, c - 2};
     }
 
     public char[][] getMatriz() { return matriz; }
